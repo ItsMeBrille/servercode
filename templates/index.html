@@ -52,7 +52,7 @@
         const state = [];
         let totalCircles = 0;
 
-        function createCircle(type, size = 'normal', bar='random') {
+        function createCircle(type, size = 'normal', bar = 'random') {
             const { color, icon } = TYPES[type];
             let radius;
             if (size === 'mega') {
@@ -74,18 +74,19 @@
             img.style.pointerEvents = 'none';
             el.appendChild(img);
 
-
-            // Random position within the left and right bars
             let x, y;
-            console.log(bar);
+            let barElement = null;
+
             if (bar === 'cybar') {
                 // Spawn at left bar
                 x = 10 + Math.random() * (100 - radius); // Position within the left bar
                 y = window.innerHeight / 2 - radius / 2; // Center vertically on the left bar
-            } else if (bar === 'borstadmoen'){
+                barElement = document.querySelector('.left-bar');
+            } else if (bar === 'borstadmoen') {
                 // Spawn at right bar
                 x = window.innerWidth - 110 + Math.random() * (100 - radius); // Position within the right bar
                 y = window.innerHeight / 2 - radius / 2; // Center vertically on the right bar
+                barElement = document.querySelector('.right-bar');
             } else {
                 // Spawn at random position on the screen
                 x = Math.random() * (window.innerWidth - radius);
@@ -96,12 +97,20 @@
             el.style.top = `${y}px`;
             document.body.appendChild(el);
 
+            // Add blink effect to the bar
+            if (barElement) {
+                barElement.classList.add('blink');
+                setTimeout(() => {
+                    barElement.classList.remove('blink');
+                }, 1000); // Remove the blink class after 1 second
+            }
+
             // Add to state
             const obj = { el, x, y, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, r: radius / 2, type, size };
             state.push(obj);
 
             totalCircles++;
-            ratio *= 0.999
+            ratio *= 0.999;
         }
 
         function update() {
