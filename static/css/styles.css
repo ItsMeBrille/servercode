@@ -1,0 +1,104 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: black;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-origin: center center;
+    transition: transform 0.5s ease-out;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    user-select: none;
+    transition: border-radius 0.4s;
+    animation: spawn 0.4s ease-out;
+}
+
+@keyframes spawn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Rainbow Effect for the screen edges */
+.rainbow-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 20px solid;
+    border-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+    border-image-slice: 1;
+    animation: rainbow 5s infinite linear;
+    pointer-events: none;
+    z-index: 999;
+}
+
+@keyframes rainbow {
+    0% {
+        border-image-source: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+    }
+
+    25% {
+        border-image-source: linear-gradient(45deg, orange, yellow, green, blue, indigo, violet, red);
+    }
+
+    50% {
+        border-image-source: linear-gradient(45deg, yellow, green, blue, indigo, violet, red, orange);
+    }
+
+    75% {
+        border-image-source: linear-gradient(45deg, green, blue, indigo, violet, red, orange, yellow);
+    }
+
+    100% {
+        border-image-source: linear-gradient(45deg, blue, indigo, violet, red, orange, yellow, green);
+    }
+}
+
+
+.bar {
+    position: absolute;
+    height: 25%;
+    width: 100px;
+    background-color: #333;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Poppins', sans-serif;
+}
+
+.left-bar {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+.right-bar {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}

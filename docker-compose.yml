@@ -1,0 +1,12 @@
+services:
+  beer-app:
+    build: .
+    container_name: beer-counter
+    ports:
+      - "80:5000"
+    volumes:
+      - ./data:/app/data  # Ensure this directory exists
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_PATH=/app/data/beer_logs.db
