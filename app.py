@@ -13,12 +13,12 @@ def init_db():
                 timestamp TEXT NOT NULL,
                 bar_name TEXT NOT NULL,
                 team_name TEXT NOT NULL,
-                beer_type TEXT NOT NULL
+                beer_type TEXT NOT NULL DEFAULT 'normal'
             )
         ''')
 
 def log_beer(bar_name: str, team_name: str, beer_type: str):
-    valid_types = ["CISK", "KS", "LKSK", "SKSK"]
+    valid_types = ["LKSK", "CISK", "KS", "SKSK"]
     if team_name not in valid_types:
         raise ValueError(f"Invalid beer type: {team_name}. Must be one of {valid_types}")
 
