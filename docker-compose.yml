@@ -1,11 +1,11 @@
 services:
   beer-app:
-    build: .
+    image: ghcr.io/itsmebrille/nakabeer:latest  # Use lowercase!
     container_name: beer-counter
     ports:
       - "80:5000"
     volumes:
-      - ./data:/app/data  # Ensure this directory exists
+      - ./data:/app/data
     restart: unless-stopped
     environment:
       - FLASK_ENV=production
