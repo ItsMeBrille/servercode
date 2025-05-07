@@ -4,6 +4,7 @@ import sqlite3
 from datetime import datetime
 
 DATABASE = 'data/beer_logs.db'
+TEAMS = ["LKSK", "CISK", "KS", "SKSK"]
 
 def init_db():
     with sqlite3.connect(DATABASE) as conn:
@@ -18,9 +19,8 @@ def init_db():
         ''')
 
 def log_beer(bar_name: str, team_name: str, beer_type: str):
-    valid_types = ["LKSK", "CISK", "KS", "SKSK"]
-    if team_name not in valid_types:
-        raise ValueError(f"Invalid beer type: {team_name}. Must be one of {valid_types}")
+    if team_name not in TEAMS:
+        raise ValueError(f"Invalid beer type: {team_name}. Must be one of {TEAMS}")
 
     timestamp = datetime.now().isoformat()
     with sqlite3.connect(DATABASE) as conn:
@@ -60,7 +60,7 @@ def button_handler(bar_name):
     if button and button.isdigit():
         idx = int(button)
         if 0 <= idx <= 3:
-            team = ["CISK", "KS", "LKSK", "SKSK"][idx]
+            team = TEAMS[idx]
             log_beer(bar_name, team, press_type)
             
             socketio.emit('press_one', {'bar_name': bar_name, 'team': team, 'press_type': press_type})
@@ -72,7 +72,7 @@ def button_handler(bar_name):
 
 @socketio.on('connect')
 def handle_connect():
-    beer_counts = {bt: get_all_count(bt) for bt in ["CISK", "KS", "LKSK", "SKSK"]}
+    beer_counts = {bt: get_all_count(bt) for bt in TEAMS}
     if socketio:
         socketio.emit('update_all', beer_counts)
 
