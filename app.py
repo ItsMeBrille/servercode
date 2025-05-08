@@ -28,9 +28,7 @@ def log_beer(bar_name: str, team_name: str, beer_type: str):
 
 def get_team_count(team_name: str):
     with sqlite3.connect(DATABASE) as conn:
-        cursor = conn.execute('''
-            SELECT COUNT(*) FROM beer_logs WHERE team_name = ?
-        ''', (team_name,))
+        cursor = conn.execute('''SELECT COUNT(*) FROM beer_logs WHERE team_name = ?''', (team_name))
         result = cursor.fetchone()
         return result[0] if result else 0
     
