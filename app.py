@@ -36,7 +36,7 @@ def get_team_count(team_name: str):
     
 def get_all_count(team_name: str):
     with sqlite3.connect(DATABASE) as conn:
-        cursor = conn.execute('''SELECT beer_type, COUNT(*) FROM beer_logs WHERE team_name = ? GROUP BY beer_type''', (team_name,))
+        cursor = conn.execute('''SELECT beer_type, COUNT(*) FROM beer_logs WHERE team_name = ? GROUP BY beer_type''', (team_name))
         results = dict(cursor.fetchall())
         normal_count = results.get('normal', 0)
         mega_count = results.get('mega', 0)
@@ -56,7 +56,7 @@ def index():
 @app.route("/button/<bar_name>", methods=["GET"])
 def button_handler(bar_name):
     button = request.args.get("button")
-    press_type = request.args.get("type")
+    press_type = request.args.get("type", "normal")
     if button and button.isdigit():
         idx = int(button)
         if 0 <= idx <= 3:
